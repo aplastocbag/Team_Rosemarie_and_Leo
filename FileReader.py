@@ -1,21 +1,21 @@
 def read_md_file(filepath):
     """Reads the content of a Markdown file into a string.
 
-    If ignore_title is True, and the first non-empty line starts with
+    if the first non-empty line starts with
     a Markdown heading marker ('#'), that line will be removed from
     the returned content.
     """
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
+        with open(filepath, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
 
         # find the first non-empty line
-        idx = 0
-        while idx < len(lines) and lines[idx].strip() == "":
-            idx += 1
+        index = 0
+        while index < len(lines) and lines[index].strip() == "":
+            index += 1
             # if that line is a Markdown heading, remove it
-        if idx < len(lines) and lines[idx].lstrip().startswith('#'):
-            del lines[idx]
+        if index < len(lines) and lines[index].lstrip().startswith('#'):
+            del lines[index]
 
         content = ''.join(lines)
         # remove Markdown bold markers '**' from the content
