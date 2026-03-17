@@ -1,3 +1,4 @@
+
 def read_md_file(filepath):
     """Reads the content of a Markdown file into a string.
 
@@ -28,6 +29,12 @@ def read_md_file(filepath):
     except Exception as e:
         return f"An error occurred: {e}"
 
+# changer le nom du file plus facilement
+
+Grocery_List_File = read_md_file("../GroceryList_test.md")
+
 # Example usage: ignore the title (first heading) when reading the file
-file_content = read_md_file("../GroceryList.md")
+file_content = Grocery_List_File
 print(file_content)
+
+
