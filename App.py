@@ -22,6 +22,14 @@ root.resizable(False, False)
 text_widget = tk.Text(root, height=2, width=20)
 text_widget.pack(pady=10, padx=10, side=tk.BOTTOM, anchor="w")
 
+
+
+
+
+
+
+
+
 padding = 0
 # Create one Checkbutton per non-empty line in the file content
 for item in list.file_content.split('\n'):
@@ -42,7 +50,14 @@ for item in list.file_content.split('\n'):
 # Create a label to display the status
 status_label = tk.Label(root, text="Checkboxes are unchecked", fg="blue")
 status_label.pack(pady=5)
+"""
+#creating columns
 
+line1 = tk.Canvas(root, width=300, height=200)
+line1.pack()
+line_id = line1.create_line(175, 0, 175, 180) 
+line1.tag_raise(line_id)
+"""
 # Start the Tkinter event loop
 root.mainloop()
 while True:

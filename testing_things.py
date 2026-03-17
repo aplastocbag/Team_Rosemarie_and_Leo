@@ -1,12 +1,6 @@
+# small place to test things
 
-
-def read_md_file(filepath):
-    """Reads the content of a Markdown file into a string.
-
-    if the first non-empty line starts with
-    a Markdown heading marker ('#'), that line will be removed from
-    the returned content.
-    """
+def New_Best_Price(filepath):
     try:
         with open(filepath, 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -32,11 +26,12 @@ def read_md_file(filepath):
 
 # changer le nom du file plus facilement
 
-Grocery_List_File = read_md_file("GroceryList_test.md")
+Grocery_List_Price = New_Best_Price("Grocery_List_Price_test.md")
 
 # Example usage: ignore the title (first heading) when reading the file
-file_content = Grocery_List_File
+file_content = Grocery_List_Price
 print(file_content)
-
-
+text = file_content
+words = text.replace(","," ")
+print(words)
 
