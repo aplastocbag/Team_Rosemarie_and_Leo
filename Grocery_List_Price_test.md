@@ -1,2 +1,2 @@
 laitue, 3
-concombre, 3
+concombre, 
