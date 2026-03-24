@@ -1,8 +1,8 @@
 def compare_prices():
     # Read both files
-    with open("GroceryList_test.md", "r") as file1:
+    with open("GroceryList_test_all_prices.md", "r") as file1:
         content1 = file1.read()
-    with open("Grocery_List_Price_test.md", "r") as file2:
+    with open("Grocery_List_Current_Price_test.md", "r") as file2:
         content2 = file2.read()
     
     # Parse first file (items with multiple prices)
@@ -19,6 +19,9 @@ def compare_prices():
     data2 = {}
     for line in content2.splitlines():
         if line.strip():
+            if parts > 30:
+                print("Too many prices for item:", line)
+                del parts[30:]  # Keep only the first 30 prices
             parts = line.split(',')
             item = parts[0].strip()
             prices = [part.strip() for part in parts[1:] if part.strip()]
@@ -47,4 +50,7 @@ def compare_prices():
             else:
                 print(f"  Same price: {min1}")
         print()  # Blank line for readability
+
+# Call the function
+compare_prices()
 
