@@ -1,19 +1,20 @@
 import tkinter as tk
 import FileReader as list 
 
-        
+list_to_edit = "GroceryList.md"   
 def bouton_active ():
-    print("tu as appuyer sur le bouton")
+    
     item = my_entry.get()
     if item and item != "item name":
-        with open("Grocery_List_Current_Price_test.md", "a") as f:
-            f.write("\n" + item )
+        with open(list_to_edit, "a") as file:
+            file.write("\n" + item )
+        file.close()
+        print("tu as ajouté " + item + " à la liste")
         var = tk.IntVar()  # separate variable for the new checkbox
         checkbox = tk.Checkbutton(
             root,
             text=item,
             variable=var,
-            command=lambda v=var, it=item: on_checkbox_toggle(v, it),
             onvalue=1,  # Value when checked
             offvalue=0  # Value when unchecked
         )
@@ -21,25 +22,16 @@ def bouton_active ():
         my_entry.delete(0, tk.END)  # Clear the entry after adding the item
 
 
-
-
-
-def on_checkbox_toggle(var, item):
-    # Update the status label for the specific item
-    if var.get() == 1:
-        status_label.config(text=f"{item}: checked")
-    else:
-        status_label.config(text=f"{item}: unchecked")
-
 # Create the main window
 root = tk.Tk()
 root.title("grocery list")
-root.geometry("300x800")
+root.geometry("300x700")
 root.resizable(False, False)
 
-padding = 0
+
 # Create one Checkbutton per non-empty line in the file content
-for item in list.file_content.split('\n'):
+grocery_list_content = list.read_md_file(list_to_edit)
+for item in grocery_list_content.split('\n'):
     text = item.strip()
     if text:
         var = tk.IntVar()  # separate variable per checkbox
@@ -47,7 +39,7 @@ for item in list.file_content.split('\n'):
             root,
             text=text,
             variable=var,
-            command=lambda v=var, it=text: on_checkbox_toggle(v, it),
+            
             onvalue=1,  # Value when checked
             offvalue=0  # Value when unchecked
         )
@@ -55,21 +47,14 @@ for item in list.file_content.split('\n'):
         checkbox.pack(pady=padding, padx=10, anchor="w")  # Place the checkbox in the window
 
 # Create a label to display the status
-status_label = tk.Label(root, text="Checkboxes are unchecked", fg="blue")
-status_label.pack(pady=5)
-"""
-#creating columns
 
-line1 = tk.Canvas(root, width=100, height=200)
-line1.pack(pady=10)
-line_id = line1.create_line(175, 0, 175, 180) 
-line1.tag_raise(line_id)
-"""
-my_entry = tk.Entry(root,width=200)
-my_entry.pack(pady= 10,anchor="s")
-my_entry.insert(0,"item name")
-bouton3 = tk.Button(root, text="ceci est un bouton", command=bouton_active)
-bouton3.pack(pady=10,anchor="s")
+
+my_entry = tk.Entry(root, width=200)
+my_entry.insert(0, "item name")
+# Pack the add-button above the entry, then pack the entry at the bottom
+bouton3 = tk.Button(root, text="Ajouter à la liste", command=bouton_active)
+bouton3.pack(side='bottom', pady=5)
+my_entry.pack(side='bottom', fill='x', padx=10, pady=(0, 10))
 # Start the Tkinter event loop
 root.mainloop()
 

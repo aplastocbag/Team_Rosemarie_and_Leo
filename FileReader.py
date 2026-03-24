@@ -24,6 +24,7 @@ def read_md_file(filepath):
         # simple approach: strip literal '**' occurrences
         content = content.replace('**', '')
         content = content.lower()
+        file.close()
         return content
     except FileNotFoundError:
         return f"Error: The file at {filepath} was not found."
