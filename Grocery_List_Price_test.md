@@ -1,2 +1,3 @@
 laitue, 3
-concombre, 
+concombre, 3 
+john,14
