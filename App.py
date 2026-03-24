@@ -6,7 +6,7 @@ def bouton_active ():
     print("tu as appuyer sur le bouton")
     item = my_entry.get()
     if item and item != "item name":
-        with open("GroceryList_test.md", "a") as f:
+        with open("GroceryList_test_all_prices.md", "a") as f:
             f.write("\n" + item )
         var = tk.IntVar()  # separate variable for the new checkbox
         checkbox = tk.Checkbutton(

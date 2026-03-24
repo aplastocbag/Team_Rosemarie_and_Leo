@@ -1,6 +1,6 @@
-laitue , 5
-piment , 3
-john,2
+laitue,8
+piment
+john
 patate
 tomahto
 pagethi

@@ -19,9 +19,6 @@ def compare_prices():
     data2 = {}
     for line in content2.splitlines():
         if line.strip():
-            if parts > 30:
-                print("Too many prices for item:", line)
-                del parts[30:]  # Keep only the first 30 prices
             parts = line.split(',')
             item = parts[0].strip()
             prices = [part.strip() for part in parts[1:] if part.strip()]
@@ -51,6 +48,38 @@ def compare_prices():
                 print(f"  Same price: {min1}")
         print()  # Blank line for readability
 
+
+def too_much_prices():
+    with open("GroceryList_test_all_prices.md", "r") as file:
+        content = file.read()
+    
+    for line in content.splitlines():
+        if line.strip():
+            parts = line.split(',')
+            item = parts[1].strip()
+            prices = [part.strip() for part in parts[1:] if part.strip()]
+            if len(prices) > 30:  # Arbitrary threshold for "too many" prices
+                print(f"Item '{item}' has too many prices: {prices}")
+
+def first_price_removal():
+    with open("GroceryList_test_all_prices.md", "r") as file:
+        lines = file.readlines()
+
+    new_lines = []
+    for line in lines:
+        parts = [x.strip() for x in line.split(',')]
+        if len(parts) > 1:
+            # remove first price by dropping index 1
+            new_line = parts[0] + ("," + ",".join(parts[2:]) if len(parts) > 2 else "")
+            new_lines.append(new_line + "\n")
+            print(f"Removed first price for item: {parts[0]}")
+        else:
+            new_lines.append(line)
+
+    with open("GroceryList_test_all_prices.md", "w") as file:
+        file.writelines(new_lines)
+
 # Call the function
 compare_prices()
-
+too_much_prices()
+first_price_removal()
