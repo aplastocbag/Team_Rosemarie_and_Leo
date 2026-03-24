@@ -29,3 +29,5 @@ on va faire des fichier qui prenne le prix courant des produits et un qui contie
 - Lien vers une communauté (support ou utilisateur)
 - license
 - acknowledgement
+
+Pour utiliser : installer pandas avec la commande python -m pip install pandas

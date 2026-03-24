@@ -31,6 +31,19 @@ def read_md_file(filepath):
     except Exception as e:
         return f"An error occurred: {e}"
 
+def read_excel_file(filepath):
+    """Reads the content of an Excel file into a string."""
+    try:
+        import pandas as pd
+        df = pd.read_excel(filepath)
+        content = df.to_string(index=False)  # Convert DataFrame to string without index
+        return content
+    except FileNotFoundError:
+        return f"Error: The file at {filepath} was not found."
+    except ImportError:
+        return "Error: pandas library is not installed. Please install it to read Excel files. To install pandas, run: python -m pip install pandas"
+    except Exception as e:
+        return f"An error occurred: {e}"
 
 
 

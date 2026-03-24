@@ -1,5 +1,5 @@
 import tkinter as tk
-import FileManager as list 
+import FileManager as file_manager
 
 list_to_edit = "GroceryList.md"   
 def bouton_active ():
@@ -30,7 +30,7 @@ root.resizable(False, False)
 
 
 # Create one Checkbutton per non-empty line in the file content
-grocery_list_content = list.read_md_file(list_to_edit)
+grocery_list_content = file_manager.read_md_file(list_to_edit)
 for item in grocery_list_content.split('\n'):
     text = item.strip()
     if text:
