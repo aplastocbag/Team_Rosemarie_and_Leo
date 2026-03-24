@@ -1,5 +1,5 @@
 import tkinter as tk
-import FileReader as list 
+import FileManager as list 
 
 list_to_edit = "GroceryList.md"   
 def bouton_active ():
