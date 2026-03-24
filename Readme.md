@@ -30,4 +30,4 @@ on va faire des fichier qui prenne le prix courant des produits et un qui contie
 - license
 - acknowledgement
 
-Pour utiliser : installer pandas avec la commande python -m pip install pandas
+Pour utiliser : installer pandas avec la commande python -m pip install pandas, python -m pip install pandas openpyxl
