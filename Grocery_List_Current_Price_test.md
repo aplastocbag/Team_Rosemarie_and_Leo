@@ -1,5 +1,5 @@
-laitue , 5
-piment , 3
+laitue,5
+piment,3
 john,2
 patate
 tomahto

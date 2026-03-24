@@ -1,8 +1,8 @@
-laitue,8
-piment
-john
-patate
-tomahto
+laitue,8,9,3
+piment,9,10
+john,11,12
+patate,13,14
+tomahto,15,16
 pagethi
 pain
 milk

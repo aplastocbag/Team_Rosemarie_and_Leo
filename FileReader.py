@@ -32,7 +32,7 @@ def read_md_file(filepath):
 
 # changer le nom du file plus facilement
 
-Grocery_List_File = read_md_file("GroceryList_test.md")
+Grocery_List_File = read_md_file("Grocery_List_Current_Price_test.md")
 
 # Example usage: ignore the title (first heading) when reading the file
 file_content = Grocery_List_File
