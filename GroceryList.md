@@ -1,4 +1,4 @@
-patate
+potato
 milk
 juice
 bread
