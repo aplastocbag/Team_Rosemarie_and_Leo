@@ -14,9 +14,9 @@ import tkinter as tk
 import FileManager
 
 # Nom du fichier markdown contenant la liste
+
+
 grocery_list = "project_files/GroceryList.md"
-
-
 def add_item():
     """
     Ajouter l'item entré dans le fichier et l'interface.
@@ -61,7 +61,7 @@ root.geometry("300x700")
 root.resizable(False, False)
 
 # Charger le contenu du fichier et créer les cases
-grocery_list_content = FileManager.read_md_file(grocery_list)
+grocery_list_content = FileManager.read_md_file()
 for item in grocery_list_content.split('\n'):
     text = item.strip()
     if not text:
