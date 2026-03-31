@@ -141,7 +141,7 @@ def get_best_price(item):
     - tuple: (prix_meilleur (int|float), nom_de_la_feuille (str)) si un prix valide est trouvé.
     - str: message d'erreur si l'article n'est pas trouvé ou en cas de problème.
     """
-    results = find_item_in_excel("prixEpicerie.xlsx", item)
+    results = find_item_in_excel("project_files/prixEpicerie.xlsx", item)
     if isinstance(results, str):
         return results  # return error message from find_item_in_excel
 

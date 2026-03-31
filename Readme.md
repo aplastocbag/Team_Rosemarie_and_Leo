@@ -1,33 +1,92 @@
-# Projet Liste
+# Projet : Liste d'épicerie et comparaison de prix
 
-Dans ce projet le but est de céer une liste et nous avertir lorsque le prix est le plus avantageux possible.
+Résumé
+-----
+Outil simple pour maintenir une liste d'épicerie et comparer
+les prix à partir d'un fichier Excel. L'application affiche le
+meilleur prix trouvé et la feuille Excel d'origine.
 
-## fonctionnalité
-Comptabilise les prix et averti lorsqu'il est le plus bas en un certain temps
+Fonctionnalités
+--------------
+- Interface graphique minimaliste (tkinter) pour gérer la liste.
+- Ajout / suppression d'articles dans `GroceryList.md`.
+- Recherche du meilleur prix dans `prixEpicerie.xlsx`.
+- Affichage du prix le plus bas et du nom de la feuille source.
 
-## trouble shooting
+Installation
+------------
+1. Cloner ce dépôt sur votre machine Windows.
+2. Créer et activer un environnement virtuel (optionnel).
+3. Installer les dépendances :
+   - pandas et openpyxl sont requis pour lire Excel.
 
-vérifer les prix a partir d'un document quelconque et voir si le plus bas affiche
+Commandes :
+```bash
+python -m pip install --upgrade pip
+python -m pip install pandas openpyxl
+```
 
-## utiliser
-pour la comparaison des prix
+Fichiers importants
+-------------------
+- project_files/GroceryList.md
+  - Liste d'articles utilisée par l'UI.
+- project_files/prixEpicerie.xlsx
+  - Exemple de fichier Excel contenant les prix.
+- ListGUI.py
+  - Interface principale (tkinter).
+- FileManager.py
+  - Fonctions utilitaires pour lire MD/Excel et chercher prix.
+- PricesGUI.py
+  - Fonctions d'affichage des meilleurs prix.
 
-## testing 
-on va faire des fichier qui prenne le prix courant des produits et un qui contient tout les prix du temps donnée et le prix se fera remplacer plus rapidement que normalement.
+Utilisation
+-----------
+1. Placer/mettre à jour les fichiers dans `project_files/`.
+2. Lancer l'interface :
+```bash
+python ListGUI.py
+```
+3. Ajouter des articles via l'UI ou modifier
+   `GroceryList.md` manuellement.
+4. Cocher les articles et cliquer sur "Check prices" pour voir
+   le meilleur prix et la feuille source.
 
- - installation
-  - dépendance
+Format attendu pour l'Excel
+---------------------------
+- Un ou plusieurs onglets (feuilles).
+- Une colonne contenant le nom de l'article.
+- Une colonne voisine contenant le prix.
+- Le module tente de convertir les valeurs en nombres.
 
-- Développement
-  - Hiérarchie des fichiers
-  - Todo (à faire)
-  - issues (problèmes connus)
-  - limitations
-  - Calendrier
-  
-- Lien vers documentation externe
-- Lien vers une communauté (support ou utilisateur)
-- license
-- acknowledgement
+Comportement et erreurs
+-----------------------
+- Si pandas n'est pas installé, les fonctions Excel
+  renvoient un message d'erreur explicite.
+- Si aucun prix valide n'est trouvé, un message clair est
+  retourné/affiché.
+- get_best_price() renvoie un dictionnaire :
+  {'value': prix, 'sheet': nom_de_la_feuille}
 
-Pour utiliser : installer pandas avec la commande python -m pip install pandas, python -m pip install pandas openpyxl
+Tests
+-----
+- Créer un fichier Excel de test dans `project_files/`.
+- Ajouter des variantes de prix et noms d'articles.
+- Vérifier que l'UI retourne le bon prix et la feuille.
+
+Développement
+-------------
+- Conserver des lignes courtes et du code lisible.
+- Les ajouts suivants sont recommandés :
+  - gestion des devises et formats régionaux,
+  - tests unitaires pour FileManager,
+  - sauvegarde des historiques de prix.
+
+Licence et crédits
+------------------
+- Projet école — adapter la licence selon vos besoins.
+- Remerciements à l'équipe pour la collaboration.
+
+Contact / Support
+-----------------
+- Ouvrir une issue dans le dépôt pour rapporter un bug ou
+  proposer une amélioration.

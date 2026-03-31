@@ -14,7 +14,7 @@ import tkinter as tk
 import FileManager
 
 # Nom du fichier markdown contenant la liste
-grocery_list = "GroceryList.md"
+grocery_list = "project_files/GroceryList.md"
 
 
 def add_item():
