@@ -1,5 +1,6 @@
 potato
-milk
 juice
 bread
 eggs
+peaches
+milk
