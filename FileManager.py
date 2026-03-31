@@ -190,7 +190,7 @@ def print_checked_items(checked_items: Iterable[str]) -> None:
     """
     try:
         for item in checked_items:
-            best_item = FileManager.get_best_price(item)
+            best_item = get_best_price(item)
 
             # Si get_best_price renvoie un message d'erreur (str)
             if isinstance(best_item, str):
