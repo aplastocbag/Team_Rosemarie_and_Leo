@@ -11,7 +11,7 @@ Fonctionnalités
 - Interface graphique minimaliste (tkinter) pour gérer la liste.
 - Ajout / suppression d'articles dans `GroceryList.md`.
 - Recherche du meilleur prix dans `prixEpicerie.xlsx`.
-- Affichage du prix le plus bas et du nom de la feuille source.
+- Logging du prix le plus bas et du nom de la feuille source.
 
 Installation
 ------------
@@ -20,7 +20,7 @@ Installation
 3. Installer les dépendances :
    - pandas et openpyxl sont requis pour lire Excel.
 
-Commandes :
+Commandes pour windows :
 ```bash
 python -m pip install --upgrade pip
 python -m pip install pandas openpyxl
@@ -36,8 +36,7 @@ Fichiers importants
   - Interface principale (tkinter).
 - FileManager.py
   - Fonctions utilitaires pour lire MD/Excel et chercher prix.
-- PricesGUI.py
-  - Fonctions d'affichage des meilleurs prix.
+
 
 Utilisation
 -----------
@@ -46,9 +45,9 @@ Utilisation
 ```bash
 python ListGUI.py
 ```
-3. Ajouter des articles via l'UI ou modifier
+1. Ajouter des articles via l'UI ou modifier
    `GroceryList.md` manuellement.
-4. Cocher les articles et cliquer sur "Check prices" pour voir
+2. Cocher les articles et cliquer sur "Check prices" pour voir
    le meilleur prix et la feuille source.
 
 Format attendu pour l'Excel
@@ -66,27 +65,3 @@ Comportement et erreurs
   retourné/affiché.
 - get_best_price() renvoie un dictionnaire :
   {'value': prix, 'sheet': nom_de_la_feuille}
-
-Tests
------
-- Créer un fichier Excel de test dans `project_files/`.
-- Ajouter des variantes de prix et noms d'articles.
-- Vérifier que l'UI retourne le bon prix et la feuille.
-
-Développement
--------------
-- Conserver des lignes courtes et du code lisible.
-- Les ajouts suivants sont recommandés :
-  - gestion des devises et formats régionaux,
-  - tests unitaires pour FileManager,
-  - sauvegarde des historiques de prix.
-
-Licence et crédits
-------------------
-- Projet école — adapter la licence selon vos besoins.
-- Remerciements à l'équipe pour la collaboration.
-
-Contact / Support
------------------
-- Ouvrir une issue dans le dépôt pour rapporter un bug ou
-  proposer une amélioration.
