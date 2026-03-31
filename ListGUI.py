@@ -12,7 +12,6 @@ Limites:
 """
 import tkinter as tk
 import FileManager
-import PricesGUI
 
 # Nom du fichier markdown contenant la liste
 grocery_list = "GroceryList.md"
@@ -174,7 +173,7 @@ new_item_widget.pack(side="bottom", fill="x", padx=10, pady=(0, 10))
 check_prices_button = tk.Button(
     root,
     text="Check prices",
-    command=lambda: PricesGUI.print_checked_items(checked_items())
+    command=lambda: FileManager.print_checked_items(checked_items())
 )
 check_prices_button.pack(side="bottom", pady=5)
 # Démarrer la boucle principale tkinter
