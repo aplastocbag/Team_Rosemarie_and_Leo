@@ -1,9 +1,17 @@
 def read_md_file(filepath):
-    """Reads the content of a Markdown file into a string.
+    """Lire le contenu d'un fichier Markdown dans une chaîne.
 
-    if the first non-empty line starts with
-    a Markdown heading marker ('#'), that line will be removed from
-    the returned content.
+    Objectif:
+    - Lire un fichier Markdown et retourner son contenu sous forme de chaîne.
+    - Si la première ligne non vide commence par un marqueur de titre Markdown ('#'),
+      cette ligne sera supprimée du contenu retourné.
+    - Les marqueurs de gras '**' sont retirés et le texte est converti en minuscules.
+
+    Entrées:
+    - filepath (str): chemin vers le fichier Markdown à lire.
+
+    Sorties:
+    - str: contenu traité du fichier en minuscules, ou message d'erreur en cas de problème.
     """
     try:
         with open(filepath, 'r', encoding='utf-8') as file:
@@ -29,35 +37,23 @@ def read_md_file(filepath):
     except Exception as e:
         return f"An error occurred: {e}"
 
-def read_excel_file(filepath):
-    """Reads the content of an Excel file into a string."""
-    try:
-        import pandas as pd
-        excel_file = pd.read_excel(filepath)
-        content = excel_file.to_string(index=False)  # Convert DataFrame to string without index
-        content = content.lower()  # Convert the content to lowercase for case-insensitive search
-        content = content.strip()  # Remove leading and trailing whitespace
-        excel_file.close()
-        return content
-    except FileNotFoundError:
-        return f"Error: The file at {filepath} was not found."
-    except ImportError:
-        return "Error: pandas library is not installed. Please install it to read Excel files. To install pandas, run: python -m pip install pandas, then python -m pip install openpyxl"
-    except Exception as e:
-        return f"An error occurred: {e}"
 
 def find_item_in_excel(filepath, item, item_col=None, value_col=None):
-    """Find rows in an Excel file matching `item` and return the value(s)
-    from the adjacent (or specified) column, along with the sheet name.
+    """Rechercher un élément dans un fichier Excel et retourner les valeurs correspondantes avec le nom de la feuille.
 
-    - filepath: path to the Excel file
-    - item: string to search for (case-insensitive)
-    - item_col: column name or index to search in. If None, all columns are searched.
-    - value_col: column name or index to return the value from. If None,
-                 the column immediately to the right of the found item is used.
+    Objectif:
+    - Parcourir toutes les feuilles d'un fichier Excel pour trouver les cellules correspondant à `item` (recherche insensible à la casse).
+    - Pour chaque occurrence trouvée, renvoyer la valeur adjacente (ou la colonne spécifiée) ainsi que le nom de la feuille.
 
-    Returns a list of dicts like {'sheet': sheet_name, 'value': value} (may be empty)
-    or an error string.
+    Entrées:
+    - filepath (str): chemin vers le fichier Excel.
+    - item (str): texte à rechercher (insensible à la casse).
+    - item_col (str|int|None): nom ou index de la colonne où effectuer la recherche; si None, toutes les colonnes sont parcourues.
+    - value_col (str|int|None): nom ou index de la colonne dont on souhaite récupérer la valeur; si None, la colonne immédiatement à droite de l'item est utilisée.
+
+    Sorties:
+    - list[dict]: liste de dictionnaires {'sheet': nom_de_la_feuille, 'value': valeur} pour chaque correspondance trouvée.
+    - str: message d'erreur en cas de problème (par exemple pandas non installé ou fichier introuvable).
     """
     try:
         import pandas as pd
@@ -129,5 +125,50 @@ def find_item_in_excel(filepath, item, item_col=None, value_col=None):
 
     return results
 
-print(find_item_in_excel("prixEpicerie.xlsx", "apple"))
+def get_best_price(item):
+    """Obtenir le meilleur prix pour un article donné à partir d'un fichier Excel.
 
+    Objectif:
+    - Rechercher l'article spécifié dans le fichier Excel "prixEpicerie.xlsx" et retourner le prix le plus bas trouvé
+      ainsi que le nom de la feuille contenant ce prix.
+
+    Entrées:
+    - item (str): nom de l'article pour lequel on souhaite obtenir le meilleur prix.
+
+    Sorties:
+    - tuple: (prix_meilleur (int|float), nom_de_la_feuille (str)) si un prix valide est trouvé.
+    - str: message d'erreur si l'article n'est pas trouvé ou en cas de problème.
+    """
+    results = find_item_in_excel("prixEpicerie.xlsx", item)
+    if isinstance(results, str):
+        return results  # return error message from find_item_in_excel
+
+    if not results:
+        return f"No price found for '{item}'."
+
+    # collect numeric candidates as (value, sheet)
+    candidates = []
+    for res in results:
+        val = res.get('value')
+        sheet = res.get('sheet')
+        if val is None:
+            continue
+        try:
+            num = float(val)
+            candidates.append((num, sheet))
+        except Exception:
+            continue
+
+    if not candidates:
+        return f"No valid price found for '{item}'."
+
+    try:
+        best_price, best_sheet = min(candidates, key=lambda x: x[0])
+        # return int when it's a whole number
+        if best_price.is_integer():
+            best_price = int(best_price)
+        return (best_price, best_sheet)
+    except Exception as e:
+        return f"An error occurred while determining the best price: {e}"
+    
+#print(get_best_price("potato"))
