@@ -1,0 +1,6 @@
+potato: 5$ at Metro
+juice: 1.5$ at Metro
+bread: 5$ at Iga
+eggs: 1.3$ at Metro
+peaches: 2$ at Metro
+milk: 2$ at Iga

@@ -1,6 +1,6 @@
 from typing import Iterable
 
-def read_md_file(filepath):
+def read_md_file():
     """Lire le contenu d'un fichier Markdown dans une chaîne.
 
     Objectif:
@@ -16,7 +16,7 @@ def read_md_file(filepath):
     - str: contenu traité du fichier en minuscules, ou message d'erreur en cas de problème.
     """
     try:
-        with open(filepath, 'r', encoding='utf-8') as file:
+        with open("project_files/GroceryList.md", 'r', encoding='utf-8') as file:
             lines = file.readlines()
 
         # find the first non-empty line
@@ -35,7 +35,7 @@ def read_md_file(filepath):
         file.close()
         return content
     except FileNotFoundError:
-        return f"Error: The file at {filepath} was not found."
+        return f"Error: The file at {"project_files/GroceryList.md"} was not found."
     except Exception as e:
         return f"An error occurred: {e}"
 
@@ -223,3 +223,19 @@ def print_checked_items(checked_items: Iterable[str]) -> None:
                       + " from sheet " + str(sheet))
     except Exception as e:
         print("An error occurred: " + str(e))
+
+best_prices = []
+for list_item in read_md_file().split('\n'):
+    item = list_item.strip()
+    if item:
+        best_item_price = get_best_price(item)
+        best_prices.append((item, best_item_price))
+with open("project_files/previous_best_prices.txt", 'w', encoding='utf-8') as file:
+    for item, price_info in best_prices:
+        if isinstance(price_info, str):
+            file.write(f"{item}: {price_info}\n")
+        elif isinstance(price_info, (list, tuple)) and len(price_info) >= 2:
+            val, sheet = price_info[0], price_info[1]
+            file.write(f"{item}: {val}$ at {sheet}\n")
+        else:
+            file.write(f"{item}: No price information available.\n")
