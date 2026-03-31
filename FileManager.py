@@ -1,5 +1,3 @@
-
-
 def read_md_file(filepath):
     """Reads the content of a Markdown file into a string.
 
@@ -50,7 +48,7 @@ def read_excel_file(filepath):
 
 def find_item_in_excel(filepath, item, item_col=None, value_col=None):
     """Find rows in an Excel file matching `item` and return the value(s)
-    from the adjacent (or specified) column.
+    from the adjacent (or specified) column, along with the sheet name.
 
     - filepath: path to the Excel file
     - item: string to search for (case-insensitive)
@@ -58,7 +56,8 @@ def find_item_in_excel(filepath, item, item_col=None, value_col=None):
     - value_col: column name or index to return the value from. If None,
                  the column immediately to the right of the found item is used.
 
-    Returns a list of matching values (may be empty) or an error string.
+    Returns a list of dicts like {'sheet': sheet_name, 'value': value} (may be empty)
+    or an error string.
     """
     try:
         import pandas as pd
@@ -66,7 +65,8 @@ def find_item_in_excel(filepath, item, item_col=None, value_col=None):
         return "Error: pandas library is not installed. Please install it to use Excel lookups."
 
     try:
-        excel_file = pd.read_excel(filepath)
+        # read all sheets into a dict: {sheet_name: DataFrame}
+        sheets = pd.read_excel(filepath, sheet_name=None)
     except FileNotFoundError:
         return f"Error: The file at {filepath} was not found."
     except Exception as e:
@@ -74,7 +74,8 @@ def find_item_in_excel(filepath, item, item_col=None, value_col=None):
 
     search = str(item).strip().lower()
     results = []
-    def _get_value(row_idx, col_idx):
+
+    def get_value(excel_file, row_idx, col_idx):
         try:
             val = excel_file.iat[row_idx, col_idx]
             if pd.isna(val):
@@ -83,39 +84,48 @@ def find_item_in_excel(filepath, item, item_col=None, value_col=None):
         except Exception:
             return None
 
-    if item_col is not None:
-        if isinstance(item_col, int):
-            cols_to_search = [item_col]
-        else:
-            if item_col in excel_file.columns:
-                cols_to_search = [excel_file.columns.get_loc(item_col)]
+    for sheet_name, excel_file in sheets.items():
+        # determine columns to search for this sheet
+        if item_col is not None:
+            if isinstance(item_col, int):
+                cols_to_search = [item_col]
             else:
-                return []
-    else:
-        cols_to_search = list(range(len(excel_file.columns)))
-
-    for col_idx in cols_to_search:
-        try:
-            col_series = excel_file.iloc[:, col_idx].astype(str).str.strip().str.lower()
-        except Exception:
-            continue
-
-        matches = col_series == search
-        match_indices = [i for i, m in enumerate(matches) if m]
-        for row_idx in match_indices:
-            if value_col is not None:
-                if isinstance(value_col, int):
-                    val = _get_value(row_idx, value_col)
+                if item_col in excel_file.columns:
+                    cols_to_search = [excel_file.columns.get_loc(item_col)]
                 else:
-                    if value_col in excel_file.columns:
-                        val = _get_value(row_idx, excel_file.columns.get_loc(value_col))
+                    # skip this sheet if the requested item_col isn't present
+                    continue
+        else:
+            cols_to_search = list(range(len(excel_file.columns)))
+
+        for col_idx in cols_to_search:
+            try:
+                col_series = excel_file.iloc[:, col_idx].astype(str).str.strip().str.lower()
+            except Exception:
+                continue
+
+            matches = col_series == search
+            match_indices = [i for i, m in enumerate(matches) if m]
+            for row_idx in match_indices:
+                if value_col is not None:
+                    if isinstance(value_col, int):
+                        val = get_value(excel_file, row_idx, value_col)
                     else:
-                        val = None
-            else:
-                val = _get_value(row_idx, col_idx + 1) if col_idx + 1 < len(excel_file.columns) else None
-                
-            val = int(val)
-            results.append(val)
+                        if value_col in excel_file.columns:
+                            val = get_value(excel_file, row_idx, excel_file.columns.get_loc(value_col))
+                        else:
+                            val = None
+                else:
+                    val = get_value(excel_file, row_idx, col_idx + 1) if col_idx + 1 < len(excel_file.columns) else None
+
+                # try to convert to int when possible, otherwise keep original
+                try:
+                    if val is not None:
+                        val = int(val)
+                except Exception:
+                    pass
+
+                results.append({'sheet': sheet_name, 'value': val})
 
     return results
 
