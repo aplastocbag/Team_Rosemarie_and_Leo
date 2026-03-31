@@ -48,7 +48,6 @@ for item in grocery_list_content.split('\n'):
 
 # Create a label to display the status
 
-
 my_entry = tk.Entry(root, width=200)
 my_entry.insert(0, "item name")
 # Pack the add-button above the entry, then pack the entry at the bottom
