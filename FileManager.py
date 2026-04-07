@@ -4,35 +4,51 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
 
-def _resolve_path(path: Optional[str], default: str) -> Path:
-    """Resolve a path string to an absolute Path.
+def _resolve_path(path: Optional[str], default: str,
+                  prefer_cwd: bool = True) -> Path:
+    """Résout un chemin en Path absolu.
 
-    Rules:
-    - If path is falsy, return BASE_DIR/default.
-    - If path is absolute, return it.
-    - If a relative path exists relative to cwd, use that.
-    - Otherwise resolve relative to BASE_DIR.
+    Comportement:
+    - Si `path` est falsy -> retourne BASE_DIR/default.
+    - Si `path` est absolu -> résolu et retourné.
+    - Si `path` est relatif :
+      * si prefer_cwd True, on préfère cwd/path s'il existe,
+        sinon BASE_DIR/path s'il existe, sinon BASE_DIR/default.
+      * si prefer_cwd False, on préfère BASE_DIR/path s'il existe,
+        sinon cwd/path s'il existe, sinon BASE_DIR/default.
+
+    Retourne un Path résolu même si le fichier n'existe pas.
     """
+    # cas par défaut (None ou "")
     if not path:
         return BASE_DIR.joinpath(default).resolve()
 
-    # accept pathlib.Path as input
-    if isinstance(path, Path):
-        p = path
-    else:
-        p = Path(path)
-        print("using relative path: " + str(p))
+    # accepter pathlib.Path en entrée
+    p = path if isinstance(path, Path) else Path(path)
 
+    # chemin absolu : on le résout et le retourne
     if p.is_absolute():
         return p.resolve()
 
-    # prefer path relative to current working directory if it exists
-    cwd_candidate = Path.cwd().joinpath(p)
-    if cwd_candidate.exists():
-        return cwd_candidate.resolve()
+    # candidats relatifs: cwd et BASE_DIR
+    cwd_candidate = (Path.cwd() / p).resolve()
+    base_candidate = (BASE_DIR / p).resolve()
+    default_candidate = BASE_DIR.joinpath(default).resolve()
 
-    # fallback: project-base relative path
-    return BASE_DIR.joinpath(p).resolve()
+    # choisir selon préférence mais toujours retomber sur le default
+    if prefer_cwd:
+        if cwd_candidate.exists():
+            return cwd_candidate
+        if base_candidate.exists():
+            return base_candidate
+        return default_candidate
+
+    # prefer base_dir
+    if base_candidate.exists():
+        return base_candidate
+    if cwd_candidate.exists():
+        return cwd_candidate
+    return default_candidate
 
 
 def read_md_file(filepath: Optional[str] = None) -> str:

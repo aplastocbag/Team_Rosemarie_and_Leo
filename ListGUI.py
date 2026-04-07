@@ -28,7 +28,7 @@ grocery_list = FileManager._resolve_path(
     "project_files/GroceryList.md"
 )
 xlsx_path = FileManager._resolve_path(
-    "../project_files/prixEpicerie.xlsx",
+    "../prixEpicerie.xlsx",
     "project_files/prixEpicerie.xlsx"
 )
 

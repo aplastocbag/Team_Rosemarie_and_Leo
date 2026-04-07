@@ -28,9 +28,9 @@ python -m pip install pandas openpyxl
 
 Fichiers importants
 -------------------
-- project_files/GroceryList.md
+- ../GroceryList.md
   - Liste d'articles utilisée par l'UI.
-- project_files/prixEpicerie.xlsx
+- ../prixEpicerie.xlsx
   - Exemple de fichier Excel contenant les prix.
 - ListGUI.py
   - Interface principale (tkinter).
@@ -48,8 +48,9 @@ python ListGUI.py
 ```
 4. Ajouter des articles via l'UI ou modifier
    `GroceryList.md` manuellement.
-5. Cocher les articles et cliquer sur "Check prices" pour voir
+5. Cocher les articles et cliquer sur "Check item prices" pour voir
    le meilleur prix et la feuille source.
+6. Si vous voulez exclure une epicerie, il suffit de selectionner
 
 Format attendu pour l'Excel
 ---------------------------
