@@ -14,7 +14,7 @@ def _resolve_path(path: Optional[str], default: str,
     """Résout un chemin en Path absolu.
 
     Comportement:
-    - Si `path` est falsy -> retourne BASE_DIR/default.
+    - Si `path` est fautif -> retourne BASE_DIR/default.
     - Si `path` est absolu -> résolu et retourné.
     - Si `path` est relatif :
       * si prefer_cwd True, on préfère cwd/path s'il existe,
