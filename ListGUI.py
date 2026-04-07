@@ -1,4 +1,6 @@
 """
+Rosemarie Dalton et Leo Lefebvre
+
 Interface combinée:
 - gauche: gestion de la liste d'épicerie (checkboxes)
 - droite: contrôle des feuilles Excel à ignorer et tableau

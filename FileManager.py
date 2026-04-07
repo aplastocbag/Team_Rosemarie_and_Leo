@@ -1,3 +1,8 @@
+'''
+Rosemarie Dalton et Leo Lefebvre
+
+'''
+
 from typing import Iterable, List, Dict, Any, Optional
 from pathlib import Path
 
