@@ -1,6 +1,7 @@
-potato: 5$ at Metro
-juice: 1.5$ at Metro
-bread: 5$ at Iga
-eggs: 1.3$ at Metro
-peaches: 2$ at Metro
-milk: 2$ at Iga
+potato: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+juice: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+bread: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+eggs: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+peaches: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+milk: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
+laitue: An error occurred while reading Excel: [Errno 13] Permission denied: 'project_files/prixEpicerie.xlsx'
