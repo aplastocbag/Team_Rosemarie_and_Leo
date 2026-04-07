@@ -40,14 +40,15 @@ Fichiers importants
 
 Utilisation
 -----------
-1. Placer/mettre à jour les fichiers dans `project_files/`.
-2. Lancer l'interface :
+1. Créer un fichier GroceryList.md et, si voulu, un fichier prixEpicerie.xlsx
+2. Si jamais le fichier n'esxiste pas, un backup est appelé dans project_files
+3. Lancer l'interface :
 ```bash
 python ListGUI.py
 ```
-1. Ajouter des articles via l'UI ou modifier
+4. Ajouter des articles via l'UI ou modifier
    `GroceryList.md` manuellement.
-2. Cocher les articles et cliquer sur "Check prices" pour voir
+5. Cocher les articles et cliquer sur "Check prices" pour voir
    le meilleur prix et la feuille source.
 
 Format attendu pour l'Excel
